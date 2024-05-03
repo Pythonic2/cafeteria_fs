@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{% block 'content' %}
+<section class="ftco-menu mb-5 pb-5">
+    <div class="container">
+        <div class="row d-md-flex">
+            <div class="col-lg-12 ftco-animate p-md-5">
+                <div class="row">
+                    <ul>
+                        <li><a href="" hx-get="{% url 'gerenciamento_produtos' %}" hx-target="#conteudo" hx-trigger="click" hx-swap="innerHTML">Gerenciar Produtos</a></li>
+                        <li><a href="">Gerenciar Clientes</a></li>
+                        <li><a href="">Gerenciar Ingredientes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-menu mb-5 pb-5">
+    <div class="container">
+        <div class="row d-md-flex">
+            <div class="col-lg-12 ftco-animate p-md-5">
+                <div class="row">
+              
+              <div class="col-md-12 d-flex align-items-center">
+                <div class="tab-content ftco-animate" id="v-pills-tabContent">
+                  <div class="tab-pane fade show active" id="v-pills-0" role="tabpanel" aria-labelledby="v-pills-0-tab">
+                      <div class="row" id="conteudo">
+                        
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+{% endblock %}
