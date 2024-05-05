@@ -4,3 +4,4 @@ migrations
 /venv
 *.jpg
 *.env
+*.yml
