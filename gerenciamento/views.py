@@ -160,13 +160,13 @@ class ListaFotos(ListView):
         return context
 
 
-def excluir_foto(pk):
+def excluir_foto(request,pk):
     foto = get_object_or_404(FotoProduto, pk=pk)
     foto.delete()
     return redirect('lista-fotos')
 
 
-def alterar_status_foto(pk):
+def alterar_status_foto(request,pk):
     foto = get_object_or_404(FotoProduto, pk=pk)
     foto.principal = not foto.principal
     foto.save()
@@ -184,6 +184,7 @@ class CriarCliente(CreateView):
 class ListaCliente(ListView):
     model = Cliente
     template_name = 'app_gerenciamento/clientes/cliente_list.html'
+    queryset = Cliente.objects.all().order_by('-id')
 
 
 class DetalharCliente(DetailView):
