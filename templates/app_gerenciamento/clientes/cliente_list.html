@@ -1,7 +1,11 @@
-<ul>
+{% extends "base.html" %}
+{% include "parciais/nav.html" %}
+{% block 'content'%}
+<ul style="margin-top:10%;">
     {% for cliente in object_list%}
-        <li><a href="{% url 'atualiza-cliente' cliente.id %}"> Atualizar</a> {{cliente.nome}} - <a href="{% url 'delete-cliente' cliente.id %}">DELETAR</a></li>
+        <li> <a href="{% url 'atualiza-cliente' cliente.id %}"> Detalhar/Atualizar</a> {{cliente.nome}} - <a href="{% url 'delete-cliente' cliente.id %}">DELETAR</a></li>
     {%endfor%}
     <input type="reset" value="Adicionar Clientes" onclick="location.href='{% url 'criar-cliente'%}'">
 
 </ul>
+{%endblock%}

@@ -1,7 +1,11 @@
-tem certeza q deseja apagar o {{object.nome}}
+{% extends "base.html" %}
+{% include "parciais/nav.html" %}
+{% block 'content'%}
+<p style="margin-top: 10%;"> tem certeza q deseja apagar o {{object.nome}}</p>
 <form action="" method="post">
     {%csrf_token%}
     <input type="submit" value="sim tenho certeza">
     <input type="reset" value="não quer mais" onclick="location.href='{% url 'lista-cliente'%}'">
     
 </form>
+{%endblock%}

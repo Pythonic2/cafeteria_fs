@@ -1,1 +1,11 @@
-{{object.nome}}
+{% extends "base.html" %}
+{% include "parciais/nav.html" %}
+{% block 'content'%}
+
+
+<p style="margin-top: 10%;">{{object.nome}}</p>
+<p style="">{{object.email}}</p>
+<p style="">{{object.telefone}}</p>
+<p style="">{{object.end}}</p>
+
+{%endblock%}

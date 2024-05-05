@@ -1,4 +1,6 @@
 {%extends 'base.html'%}
+{% include "parciais/nav.html" %}
+
 {% block 'content' %}
 <section class="ftco-menu mb-5 pb-5">
     <div class="container">
@@ -7,9 +9,10 @@
                 <div class="row">
                     <ul>
                         <li><a href="{% url 'adicionar-ingredientes'%}">Adicionar Ingredientes</li>
+                        <li><a href="{% url 'lista-ingredientes'%}">Lista Ingredientes</li>
                         <li><a href="{% url 'adicionar-produto'%}">Adicionar Produtos</li>
-                        <li><a href="{% url 'lista-produtos'%}">Listar Produtos</li>
-                        <li><a href="{% url 'lista-produtos'%}">Editar Produtos</a></li>
+                        <li><a href="{% url 'lista-produtos'%}">Lista Produtos</li>
+                        <li><a href="{% url 'adicionar-fotos'%}">Adicionar Fotos</a></li>
                         <li><a href="{% url 'lista-fotos'%}">Lista Fotos</a></li>
                  
                     </ul>

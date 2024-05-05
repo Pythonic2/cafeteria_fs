@@ -1,7 +1,11 @@
-<form action="" method="post">
+{% extends "base.html" %}
+{% include "parciais/nav.html" %}
+{% block 'content'%}
+<form action="" method="post" style="margin-top:10%;">
     {%csrf_token%}
     {{form.as_p}}
     <input type="submit" value="salvar cliente">
     <input type="reset" value="Lista Clientes" onclick="location.href='{% url 'lista-cliente'%}'">
 
 </form>
+{%endblock%}

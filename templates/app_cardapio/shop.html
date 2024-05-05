@@ -1,103 +1,28 @@
-
-{% comment %} {% extends "base.html" %}
+{% extends "base.html" %}
+{% include "parciais/head.html" %}
+{% include "parciais/nav.html" %}
 {%block 'content'%}
+<h1 style="margin-top:10%;">Produtos Disponíveis - {{usuario}}</h1>
+<div class="produtos">
+	{% for produto in produtos %}
+		<div class="produto">
+			<h2>{{ produto.nome }}</h2>
+			{% for foto in produto.fotos.all %}
+				{% if foto.principal %}
+					<img src="{{ foto.imagem.url }}" alt="" style="width: 250px; height: 180px;">
+					
+				{% endif %}
+			{% endfor %}
 
-<section class="home-slider owl-carousel">
-
-	<div class="slider-item" style="background-image: url(/static/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-	  <div class="container">
-		<div class="row slider-text justify-content-center align-items-center">
-
-		  <div class="col-md-7 col-sm-12 text-center ftco-animate">
-			  <h1 class="mb-3 mt-5 bread">Cardápio Online</h1>
-			  <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home'%}">Home</a></span> <span>Shop</span></p>
-		  </div>
-
+			<p>Descrição: {{ produto.descricao }}</p>
+			<p>Valor: ${{ produto.valor }}</p>
+			<form method="post" action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}">
+				{% csrf_token %}
+				<label for="quantidade">Quantidade:</label>
+				<input type="number" name="quantidade" id="quantidade" value="1" min="1">
+				<button type="submit">Adicionar ao Carrinho</button>
+			</form>
 		</div>
-	  </div>
-	</div>
-  </section>
-
-  <section class="ftco-menu mb-5 pb-5">
-	  <div class="container">
-		  <div class="row d-md-flex">
-			  <div class="col-lg-12 ftco-animate p-md-5">
-				  <div class="row">
-				
-				<div class="col-md-12 d-flex align-items-center">
-				  
-				  <div class="tab-content ftco-animate" id="v-pills-tabContent">
-
-					<div class="tab-pane fade show active" id="v-pills-0" role="tabpanel" aria-labelledby="v-pills-0-tab">
-						<div class="row">
-							<!-- Seu código HTML anterior -->
-
-							<div class="row">
-								{% for produto in produtos %}
-									<div class="col-md-3">
-										<div class="menu-entry">
-											{% for foto in produto.fotos.all %}
-												<img src="{{ foto.imagem.url }}" alt="Foto do Produto" style="width:250px;height:180px;">
-											{% endfor %}
-											<div class="text text-center pt-4">
-												<h3><a href="product-single.html">{{ produto.nome }}</a></h3>
-												<p>{{ produto.descricao }}</p>
-												<p class="price"><span>${{ produto.valor }}</span></p>
-												<form action="{% url 'adicionar_ao_carrinho' produto.id %}" method="post">
-													{% csrf_token %}
-													<input type="number" name="quantidade" value="0" min="1">
-													<button type="submit" class="btn btn-primary btn-outline-primary">Add to Cart</button>
-												</form>
-											</div>
-										</div>
-									</div>
-								{% endfor %}
-							</div>
-							
-
-								 
-						</div>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div>
-		  </div>
-	  </div>
-  </section>
-
- 
-<!-- loader -->
-<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
+	{% endfor %}
+</div>
 {%endblock%}
-
-
-     {% endcomment %}
-
-
-    <h1>Produtos Disponíveis - {{usuario}}</h1>
-    <div class="produtos">
-        {% for produto in produtos %}
-            <div class="produto">
-                <h2>{{ produto.nome }}</h2>
-				{% for foto in produto.fotos.all %}
-					{% if foto.principal %}
-						<img src="{{ foto.imagem.url }}" alt="" style="width: 250px; height: 180px;">
-						
-					{% endif %}
-				{% endfor %}
-
-                <p>Descrição: {{ produto.descricao }}</p>
-                <p>Valor: ${{ produto.valor }}</p>
-                <form method="post" action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}">
-                    {% csrf_token %}
-                    <label for="quantidade">Quantidade:</label>
-                    <input type="number" name="quantidade" id="quantidade" value="1" min="1">
-                    <button type="submit">Adicionar ao Carrinho</button>
-                </form>
-            </div>
-        {% endfor %}
-    </div>

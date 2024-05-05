@@ -1,4 +1,8 @@
-<h1>Seu Carrinho - {{usuario}}</h1>
+{% extends "base.html" %}
+{% include "parciais/head.html" %}
+{% include "parciais/nav.html" %}
+{%block 'content'%}
+<h1 style="margin-top:10%;">Seu Carrinho - {{usuario}}</h1>
     <div class="carrinho">
         {% for produto_id, item in carrinho.items %}
             <div class="item-carrinho">
@@ -23,3 +27,4 @@
         </select>
         <button type="submit">Pagar</button>
     </form>
+{%endblock%}

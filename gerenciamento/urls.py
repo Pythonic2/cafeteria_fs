@@ -25,7 +25,6 @@ urlpatterns = [
 
     path('criar-cliente/', CriarCliente.as_view(), name='criar-cliente'),
     path('lista-cliente/', ListaCliente.as_view(), name='lista-cliente'),
-    path('detail-cliente/<int:pk>/', DetalharCliente.as_view(), name='detail-cliente'),
     path('delete-cliente/<int:pk>/', DeletarCliente.as_view(), name='delete-cliente'),
     path('atualiza-cliente/<int:pk>/', AtualizarCliente.as_view(), name='atualiza-cliente'),
 ]
