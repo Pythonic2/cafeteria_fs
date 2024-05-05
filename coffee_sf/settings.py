@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'produtos',
     'main',
     'gerenciamento',
+    'pagamentos',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,10 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'clientes.CustomUser'
+LOGIN_REDIRECT_URL = 'cardapio'
+LOGIN_URL = 'login'
 
 STATIC_URL = '/static/'
 

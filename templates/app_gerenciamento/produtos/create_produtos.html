@@ -1,0 +1,19 @@
+{% include 'parciais/head.html' %}
+{% include 'parciais/nav.html' %}
+
+<div class="container" style="margin-top:10%;">
+    <h3>Adicione Produtos</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Formulário -->
+            <form action="" method="post" enctype="multipart/form-data" id="cadastrar_produto">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Salvar" >
+                <input type="reset" value="Listar Produtos" onclick="location.href='{% url 'lista-produtos'%}'">
+
+            </form>
+        </div>
+       
+    </div>
+</div>

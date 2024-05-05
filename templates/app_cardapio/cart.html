@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block 'content' %}
+
+    <!-- seu_template_carrinho.html -->
+    {% for produto_id, item in carrinho.items %}
+        {% if item.quantidade > 0 %}
+            <p style="margin-top:10%;">{{ item.produto }} - ${{ item.preco }} x {{ item.quantidade }}</p>
+            <form  method="post">
+                {% csrf_token %}
+               
+                <a href="{% url 'cardapio'  %}">Adicionar Mais Intens</a><br>
+				<a href="{% url 'limpar-carrinho'  %}">Remover</a>
+            </form>
+        {% endif %}
+    {% endfor %}
+    <p>Total: ${{ total|floatformat:"2" }}</p>
+    <form action="{% url 'processar_pagamento' %}" method="post">
+        {% csrf_token %}
+        <select name="forma_pagamento">
+            <option value="cartao_credito">Cartão de Crédito</option>
+            <option value="cartao_debito">Cartão de Débito</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="pix">PIX</option>
+        </select>
+        <button type="submit">Pagar</button>
+    </form>
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+{% endblock %} 

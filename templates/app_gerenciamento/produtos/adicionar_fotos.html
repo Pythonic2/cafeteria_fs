@@ -1,0 +1,17 @@
+{% include 'parciais/head.html' %}
+{% include 'parciais/nav.html' %}
+<h1 style="margin-top:10%;%">Adicione Fotos</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+    {% if mostrar%}
+        <div class="alert alert-success" role="alert">
+        Você pode Incluir mais fotos a este produto!!!
+      </div>
+    {%endif%}
+    <input type="reset" value="Adicionar Produtos" onclick="location.href='{% url 'adicionar-produto'%}'">
+    <input type="reset" value="Listar Produtos" onclick="location.href='{% url 'lista-produtos'%}'">
+    <input type="reset" value="Listar Fotos" onclick="location.href='{% url 'lista-fotos'%}'">
+  </form>

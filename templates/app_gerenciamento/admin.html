@@ -6,9 +6,12 @@
             <div class="col-lg-12 ftco-animate p-md-5">
                 <div class="row">
                     <ul>
-                        <li><a href="" hx-get="{% url 'gerenciamento_produtos' %}" hx-target="#conteudo" hx-trigger="click" hx-swap="innerHTML">Gerenciar Produtos</a></li>
-                        <li><a href="">Gerenciar Clientes</a></li>
-                        <li><a href="">Gerenciar Ingredientes</a></li>
+                        <li><a href="{% url 'adicionar-ingredientes'%}">Adicionar Ingredientes</li>
+                        <li><a href="{% url 'adicionar-produto'%}">Adicionar Produtos</li>
+                        <li><a href="{% url 'lista-produtos'%}">Listar Produtos</li>
+                        <li><a href="{% url 'lista-produtos'%}">Editar Produtos</a></li>
+                        <li><a href="{% url 'lista-fotos'%}">Lista Fotos</a></li>
+                 
                     </ul>
                 </div>
             </div>

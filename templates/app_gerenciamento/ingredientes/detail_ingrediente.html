@@ -1,0 +1,16 @@
+<!-- detalhes_ingrediente.html -->
+<h1>Detalhes do Ingrediente</h1>
+<p>Nome: {{ ingrediente.nome }}</p>
+<p>Quantidade em Estoque: {{ ingrediente.quantidade_em_estoque }}</p>
+
+<!-- Formulário para editar o ingrediente -->
+<form action="{% url 'editar-ingrediente' ingrediente.id %}" method="post">
+    {% csrf_token %}
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="{{ ingrediente.nome }}"><br>
+    <label for="quantidade">Quantidade em Estoque:</label>
+    <input type="number" id="quantidade" name="quantidade" value="{{ ingrediente.quantidade_em_estoque }}"><br>
+    <input type="submit" value="Salvar">
+</form>
+<a href="{% url 'deletar-ingrediente' ingrediente.id %}">Apagar</a>
+<a href="{% url 'adicionar-ingredientes' %}">Voltar</a>

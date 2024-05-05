@@ -1,0 +1,20 @@
+<div class="container">
+    <h1>Ingredientes</h1>
+    <div class="row">
+        <ul>
+            {% for ingrediente in ingredientes %}
+                <li>
+                    <a href="{% url 'editar-ingrediente' ingrediente.id %}">Editar</a> 
+                    {{ ingrediente.nome }} - qtd {{ ingrediente.quantidade_em_estoque }}
+                    <a href="{% url 'deletar-ingrediente' ingrediente.id %}">Apagar</a>
+                </li>
+            {% endfor %}
+
+        </ul>
+        
+    </div>
+</div>
+					  
+								  
+					
+					

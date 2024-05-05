@@ -8,7 +8,13 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="{%url 'home'%}" class="nav-link">Home</a></li>
           <li class="nav-item active"><a href="{% url 'cardapio'%}" class="nav-link">Cardápio</a></li>
+          <li class="nav-item active"><a href="{% url 'gerenciamento'%}" class="nav-link">Gerenciamento</a></li>
+          {%if usuario%}
+          <li class="nav-item active"><a href="" class="nav-link">Cliente: {{usuario}}</a></li>
+          <li class="nav-item active"><a href="{% url 'logout'%}" class="nav-link">sair</a></li>
+          {%endif%}
           <li class="nav-item cart"><a href="cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span><span class="bag d-flex justify-content-center align-items-center"><small>1</small></span></a></li>
+
         </ul>
       </div>
       </div>

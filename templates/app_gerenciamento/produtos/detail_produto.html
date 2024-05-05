@@ -1,0 +1,19 @@
+<!-- detail_produto.html -->
+<h1>Detalhes do Produto</h1>
+<p>Nome: {{ object.nome }}</p>
+<p>Descrição: {{ object.descricao }}</p>
+<p>Informações Nutricionais: {{ object.informacoes_nutricionais }}</p>
+<p>Valor: {{ object.valor }}</p>
+<p>Quantidade em Estoque: {{ object.quantidade_em_estoque }}</p>
+
+<h2>Ingredientes:</h2>
+<ul>
+    {% for ingrediente in object.ingredientes.all %}
+        <li>{{ ingrediente.nome }} - {{ ingrediente.quantidade_em_estoque }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Fotos do Produto:</h2>
+{% for foto in object.fotos.all %}
+    <img src="{{ foto.imagem.url }}" alt="Foto do Produto">
+{% endfor %}

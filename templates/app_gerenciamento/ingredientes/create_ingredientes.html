@@ -1,0 +1,21 @@
+{% include 'parciais/head.html' %}
+<div class="container">
+    <h3>Adicione Ingredientes</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Formulário -->
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Salvar" >
+            </form>
+            
+            <input type="reset" value="Adicionar Produtos" onclick="location.href='{% url 'adicionar-produto'%}'">
+
+            <div id="conteudo">
+                {% include "app_gerenciamento/ingredientes/lista_all_ingredientes.html" %}
+            </div>
+        </div>
+      
+    </div>
+</div>
