@@ -13,8 +13,7 @@
           <li class="nav-item active"><a href="" class="nav-link">Cliente: {{usuario}}</a></li>
           <li class="nav-item active"><a href="{% url 'logout'%}" class="nav-link">sair</a></li>
           {%endif%}
-          <li class="nav-item cart"><a href="cart.html" class="nav-link"><span class="icon icon-shopping_cart"></span><span class="bag d-flex justify-content-center align-items-center"><small>1</small></span></a></li>
-
+          <li class="nav-item cart"><a href="{% url 'pagina_carrinho' %}" class="nav-link"><span class="icon icon-shopping_cart"></span><span class="bag d-flex justify-content-center align-items-center"><small>{{quantidade_carrinho}}</small></span></a></li>
         </ul>
       </div>
       </div>

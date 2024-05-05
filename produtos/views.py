@@ -23,22 +23,27 @@ def monitorar_quantidade():
 
 class CardapioView(TemplateView):
     template_name = 'app_cardapio/shop.html'
+
     @method_decorator(login_required)
-    def get (self,request, **kwargs):
+    def get(self, request, **kwargs):
         context = super().get_context_data(**kwargs)
         context['produtos'] = Produto.objects.all()
         context['usuario'] = request.user
-        print(context['usuario'])
-        return render(request,self.template_name,context)
+        context['quantidade_carrinho'] = self.obter_quantidade_carrinho(request)
+        return render(request, self.template_name, context)
+
+    def obter_quantidade_carrinho(self, request):
+        carrinho = request.session.get('carrinho', {})
+        quantidade_total = sum(item['quantidade'] for item in carrinho.values())
+        return quantidade_total
+
 
 
 def adicionar_ao_carrinho(request, produto_id):
     produto = Produto.objects.get(pk=produto_id)
     quantidade = int(request.POST.get('quantidade', 0))
-    
     if quantidade >= 1:
         carrinho = request.session.get('carrinho', {})
-        print(carrinho)
         if produto_id in carrinho:
             carrinho[produto_id]['quantidade'] += quantidade 
             carrinho[produto_id]['preco_total'] += quantidade * float(produto.valor)
@@ -51,21 +56,42 @@ def adicionar_ao_carrinho(request, produto_id):
             }
 
         request.session['carrinho'] = carrinho
-    return redirect('pagina_carrinho')
+
+    return redirect('cardapio')
 
 
 def limpar_carrinho(request):
     request.session.flush() 
     return redirect('cardapio')
 
-
 def pagina_carrinho(request):
     carrinho = request.session.get('carrinho', {})
     total = sum(item.get('preco_total', 0) for item in carrinho.values())
+    quantidade_total = sum(item.get('quantidade', 0) for item in carrinho.values())
     total = round(total, 2)
-    context= {'carrinho': carrinho, 'total': total}
-    context['usuario'] = request.user
-    return render(request, 'app_cardapio/cart.html',context)
+    
+    # Obtendo os produtos do carrinho com suas fotos
+    produtos_com_fotos = []
+    for produto_id, item in carrinho.items():
+        produto = Produto.objects.get(pk=produto_id)
+        produto_com_foto = {
+            'produto': produto,
+            'preco': item['preco'],
+            'quantidade': item['quantidade'],
+            'preco_total': item['preco_total'],
+            'fotos': produto.fotos.all()  # Obtém todas as fotos do produto
+        }
+        produtos_com_fotos.append(produto_com_foto)
+    
+    context = {
+        'carrinho': produtos_com_fotos,  # Agora passamos os produtos com suas fotos
+        'total': total,
+        'usuario': request.user,
+        'quantidade_carrinho': quantidade_total
+    }
+    
+    return render(request, 'app_cardapio/cart.html', context)
+
 
 
 def remover_do_carrinho(request, produto_id):

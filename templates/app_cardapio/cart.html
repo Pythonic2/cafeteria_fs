@@ -1,15 +1,23 @@
 {% extends "base.html" %}
 {% include "parciais/head.html" %}
-{% include "parciais/nav.html" %}
-{%block 'content'%}
-<h1 style="margin-top:10%;">Seu Carrinho - {{usuario}}</h1>
+{% include "parciais/nav.html"  %}
+{% block 'content' %}
+<h1 style="margin-top:10%;">Seu Carrinho - {{ usuario }}</h1>
+<div class="containser">
     <div class="carrinho">
-        {% for produto_id, item in carrinho.items %}
+        {% for item in carrinho %}
             <div class="item-carrinho">
-                <h2>{{ item.produto }}</h2>
+                <h2>{{ item.produto.nome }}</h2>
+                <!-- Exibir a foto do produto -->
+                {% for foto in item.fotos.all %}
+                    {% if foto.principal %}
+                    
+                        <img src="{{ foto.imagem.url }}" alt="{{ item.produto.nome }}" style="width: 100px; height: 100px;">
+                    {% endif %}
+                {% endfor %}
                 <p>Preço Unitário: ${{ item.preco }}</p>
                 <p>Quantidade: {{ item.quantidade }}</p>
-                <form method="post" action="{% url 'remover_do_carrinho' produto_id=produto_id %}">
+                <form method="post" action="{% url 'remover_do_carrinho' produto_id=item.produto.pk %}">
                     {% csrf_token %}
                     <button type="submit">Remover</button>
                 </form>
@@ -26,5 +34,6 @@
             <option value="pix">PIX</option>
         </select>
         <button type="submit">Pagar</button>
+        <input type="reset" value="Adicionar Itens" onclick="location.href='{% url 'cardapio'%}'">
     </form>
-{%endblock%}
+{% endblock %}

@@ -32,8 +32,9 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
+                            <p>Nutricional: {{produto.informacoes_nutricionais}}</p>
+                            <p>valoe: R${{produto.valor}}</p>
                             <a href="{% url 'editar-produtos' produto.id %}" class="btn btn-primary">Editar</a>
-                            <a href="{% url 'detail-produtos' produto.id %}" class="btn btn-info">Visualizar</a>
                             <a href="{% url 'delete-produtos' produto.id %}" class="btn btn-danger">Apagar</a>
                         </div>
                     </div>

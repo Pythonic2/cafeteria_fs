@@ -1,5 +1,8 @@
 <!-- detail_produto.html -->
-<h1>Detalhes do Produto</h1>
+{% include 'parciais/head.html' %}
+{% include 'parciais/nav.html' %}
+
+<h1 style="margin-top:10%;">Detalhes do Produto</h1>
 <p>Nome: {{ object.nome }}</p>
 <p>Descrição: {{ object.descricao }}</p>
 <p>Informações Nutricionais: {{ object.informacoes_nutricionais }}</p>
