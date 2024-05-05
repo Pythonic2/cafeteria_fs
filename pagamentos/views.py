@@ -31,3 +31,6 @@ def processar_pagamento(request):
 
     # Redirecionar para a página do carrinho com uma mensagem de sucesso
     return redirect('pagina_carrinho')  # ou render com uma mensagem de sucesso
+
+
+

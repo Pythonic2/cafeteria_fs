@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from produtos.models import Produto
-from clientes.models import User
+from authencications.models import User
 
 class Pagamento(models.Model):
     FORMAS_PAGAMENTO = [
