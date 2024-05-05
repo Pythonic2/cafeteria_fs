@@ -11,8 +11,10 @@ class Cliente(models.Model):
     telefone = PhoneNumberField()
     end = models.CharField(max_length=200)
 
-
-
+    def __str__(self) -> str:
+        return self.nome
+    
+    
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     telefone = PhoneNumberField(blank=True)

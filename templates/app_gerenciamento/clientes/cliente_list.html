@@ -1,0 +1,7 @@
+<ul>
+    {% for cliente in object_list%}
+        <li><a href="{% url 'atualiza-cliente' cliente.id %}"> Atualizar</a> {{cliente.nome}} - <a href="{% url 'delete-cliente' cliente.id %}">DELETAR</a></li>
+    {%endfor%}
+    <input type="reset" value="Adicionar Clientes" onclick="location.href='{% url 'criar-cliente'%}'">
+
+</ul>

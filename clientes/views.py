@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView,DeleteView,DeleteView,UpdateView
+from django.views.generic import CreateView,DeleteView,ListView,UpdateView,DetailView
 from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -31,7 +31,6 @@ class SignUpView(CreateView):
     def form_invalid(self, form):
         messages.error(self.request, 'Erro no cadastro. Por favor, verifique os dados informados.')
         return super().form_invalid(form)
-
 
 
 class LoginUsuario(LoginView):

@@ -20,6 +20,7 @@ def monitorar_quantidade():
         for ingrediente in ingredientes_acabando:
             print(f"- {ingrediente.nome}: {ingrediente.quantidade_em_estoque}")
 
+
 class CardapioView(TemplateView):
     template_name = 'app_cardapio/shop.html'
     @method_decorator(login_required)
@@ -57,6 +58,7 @@ def limpar_carrinho(request):
     request.session.flush() 
     return redirect('cardapio')
 
+
 def pagina_carrinho(request):
     carrinho = request.session.get('carrinho', {})
     total = sum(item.get('preco_total', 0) for item in carrinho.values())
@@ -65,6 +67,7 @@ def pagina_carrinho(request):
     context['usuario'] = request.user
     return render(request, 'app_cardapio/cart.html',context)
 
+
 def remover_do_carrinho(request, produto_id):
     carrinho = request.session.get('carrinho', {})
     if str(produto_id) in carrinho:
@@ -72,7 +75,6 @@ def remover_do_carrinho(request, produto_id):
         request.session['carrinho'] = carrinho
         request.session.save()
     return redirect('pagina_carrinho')
-
 
 
 def processar_pagamento(request):

@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.views.generic import DetailView,ListView,CreateView,UpdateView,DeleteView
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
-
+from clientes.models import Cliente
+from clientes.forms import ClienteForm
 
 def monitorar_quantidade():
     produtos_acabando = Produto.objects.filter(quantidade_em_estoque__lt=10)
@@ -31,7 +32,7 @@ class GerenciamentoView(TemplateView):
 
         return render(request, self.template_name)
     
-
+# gerenciamento de Produto
 class NewProduto(CreateView):
     model = Produto
     form_class = ProdutoForm
@@ -64,8 +65,8 @@ class UpdateProduto(UpdateView):
     success_url = reverse_lazy('adicionar-fotos')
 
 
-class DetailProduto(DeleteView):
-    queryset = Produto.objects.all().order_by('-id')
+class DetailProduto(DetailView):
+    queryset = Produto.objects.all()
     template_name = 'app_gerenciamento/produtos/detail_produto.html'
 
 
@@ -75,6 +76,7 @@ class DeleteProduto(DeleteView):
     success_url = reverse_lazy('lista-produtos')
 
 
+# gerenciamneto de ingredientes
 class AdicionarIngredientes(CreateView):
     model = Ingrediente
     form_class = IngredienteForm
@@ -98,7 +100,7 @@ def htmx_lista_ingredientes(request):
     return render(request,'app_gerenciamento/ingredientes/lista_all_ingredientes.html',context)
 
 
-def deletar_ingrediente(request, id):
+def deletar_ingrediente(id):
     ingrediente = Ingrediente.objects.get(id=id)
     ingrediente.delete()
     return HttpResponseRedirect(reverse('adicionar-ingredientes'))
@@ -117,6 +119,7 @@ class EditarIngrediente(UpdateView):
     success_url = reverse_lazy('adicionar-ingredientes')
 
 
+# gerenciamento de fotos
 class AdicionarFotos(CreateView):
     template_name = "app_gerenciamento/produtos/adicionar_fotos.html"
     form_class = ImageForm
@@ -157,14 +160,45 @@ class ListaFotos(ListView):
         return context
 
 
-def excluir_foto(request, pk):
+def excluir_foto(pk):
     foto = get_object_or_404(FotoProduto, pk=pk)
     foto.delete()
     return redirect('lista-fotos')
 
 
-def alterar_status_foto(request, pk):
+def alterar_status_foto(pk):
     foto = get_object_or_404(FotoProduto, pk=pk)
     foto.principal = not foto.principal
     foto.save()
     return redirect('lista-fotos')
+
+
+# gerenciamneto clientes
+class CriarCliente(CreateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = 'app_gerenciamento/clientes/create_cliente.html'
+    success_url = reverse_lazy('criar-cliente')
+
+
+class ListaCliente(ListView):
+    model = Cliente
+    template_name = 'app_gerenciamento/clientes/cliente_list.html'
+
+
+class DetalharCliente(DetailView):
+    queryset = Cliente.objects.all()
+    template_name = 'app_gerenciamento/clientes/cliente_detail.html'
+
+
+class DeletarCliente(DeleteView):
+    queryset = Cliente.objects.all()
+    template_name = 'app_gerenciamento/clientes/cliente_confirm_delete.html'
+    success_url = reverse_lazy('lista-cliente')
+
+
+class AtualizarCliente(UpdateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = 'app_gerenciamento/clientes/create_cliente.html'
+    success_url = reverse_lazy('lista-cliente')
