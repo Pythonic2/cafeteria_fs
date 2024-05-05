@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+
+{% comment %} {% extends "base.html" %}
 {%block 'content'%}
 
 <section class="home-slider owl-carousel">
@@ -74,4 +75,29 @@
 {%endblock%}
 
 
-    
+     {% endcomment %}
+
+
+    <h1>Produtos Disponíveis - {{usuario}}</h1>
+    <div class="produtos">
+        {% for produto in produtos %}
+            <div class="produto">
+                <h2>{{ produto.nome }}</h2>
+				{% for foto in produto.fotos.all %}
+					{% if foto.principal %}
+						<img src="{{ foto.imagem.url }}" alt="" style="width: 250px; height: 180px;">
+						
+					{% endif %}
+				{% endfor %}
+
+                <p>Descrição: {{ produto.descricao }}</p>
+                <p>Valor: ${{ produto.valor }}</p>
+                <form method="post" action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}">
+                    {% csrf_token %}
+                    <label for="quantidade">Quantidade:</label>
+                    <input type="number" name="quantidade" id="quantidade" value="1" min="1">
+                    <button type="submit">Adicionar ao Carrinho</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>

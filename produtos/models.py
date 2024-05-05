@@ -7,24 +7,7 @@ from django.core.validators import MinValueValidator
 
 User = get_user_model()
 
-class Carrinho(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    criado_em = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Carrinho de {self.usuario.username}"
-
-class ItemCarrinho(models.Model):
-    carrinho = models.ForeignKey(Carrinho, related_name='itens', on_delete=models.CASCADE)
-    produto = models.ForeignKey('Produto', on_delete=models.CASCADE)
-    quantidade = models.PositiveIntegerField(default=1)
-    preco_unitario = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
-
-    def preco_total(self):
-        return self.preco_unitario * self.quantidade
-
-    def __str__(self):
-        return f"Item do carrinho de {self.carrinho.usuario.username}: {self.produto.nome}"
     
 class Ingrediente(models.Model):
     nome = models.CharField(max_length=70)

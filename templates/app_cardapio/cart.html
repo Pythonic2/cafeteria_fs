@@ -1,18 +1,17 @@
-{% extends "base.html" %}
-{% block 'content' %}
-
-    <!-- seu_template_carrinho.html -->
-    {% for produto_id, item in carrinho.items %}
-        {% if item.quantidade > 0 %}
-            <p style="margin-top:10%;">{{ item.produto }} - ${{ item.preco }} x {{ item.quantidade }}</p>
-            <form  method="post">
-                {% csrf_token %}
-               
-                <a href="{% url 'cardapio'  %}">Adicionar Mais Intens</a><br>
-				<a href="{% url 'limpar-carrinho'  %}">Remover</a>
-            </form>
-        {% endif %}
-    {% endfor %}
+<h1>Seu Carrinho - {{usuario}}</h1>
+    <div class="carrinho">
+        {% for produto_id, item in carrinho.items %}
+            <div class="item-carrinho">
+                <h2>{{ item.produto }}</h2>
+                <p>Preço Unitário: ${{ item.preco }}</p>
+                <p>Quantidade: {{ item.quantidade }}</p>
+                <form method="post" action="{% url 'remover_do_carrinho' produto_id=produto_id %}">
+                    {% csrf_token %}
+                    <button type="submit">Remover</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
     <p>Total: ${{ total|floatformat:"2" }}</p>
     <form action="{% url 'processar_pagamento' %}" method="post">
         {% csrf_token %}
@@ -24,7 +23,3 @@
         </select>
         <button type="submit">Pagar</button>
     </form>
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-{% endblock %} 

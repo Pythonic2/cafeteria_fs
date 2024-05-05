@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from .models import Pagamento
 from produtos.models import Produto
 

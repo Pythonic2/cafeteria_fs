@@ -5,6 +5,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 
 
+class Cliente(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    telefone = PhoneNumberField()
+    end = models.CharField(max_length=200)
+
+
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     telefone = PhoneNumberField(blank=True)

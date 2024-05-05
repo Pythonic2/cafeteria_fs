@@ -1,6 +1,9 @@
 from django import forms
 from .models import Produto, FotoProduto, Ingrediente
 
+class AdicionarItemForm(forms.Form):
+    quantidade = forms.IntegerField(min_value=1)
+
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 

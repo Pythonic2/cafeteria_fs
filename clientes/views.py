@@ -3,7 +3,7 @@ from django.views.generic import CreateView,DeleteView,DeleteView,UpdateView
 from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from .models import CustomUser
 from django.utils.translation import gettext_lazy
 from django.contrib.auth import logout
@@ -14,6 +14,7 @@ from django.contrib.auth import get_user_model
 def logout_view(request):
     logout(request)
     return redirect("login")
+
 User = get_user_model()
 
 
