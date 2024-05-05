@@ -38,7 +38,6 @@ class CardapioView(TemplateView):
         return quantidade_total
 
 
-
 def adicionar_ao_carrinho(request, produto_id):
     produto = Produto.objects.get(pk=produto_id)
     quantidade = int(request.POST.get('quantidade', 0))
@@ -61,8 +60,11 @@ def adicionar_ao_carrinho(request, produto_id):
 
 
 def limpar_carrinho(request):
-    request.session.flush() 
+    if 'carrinho' in request.session:
+        del request.session['carrinho']
+        request.session.save()
     return redirect('cardapio')
+
 
 def pagina_carrinho(request):
     carrinho = request.session.get('carrinho', {})
@@ -93,7 +95,6 @@ def pagina_carrinho(request):
     return render(request, 'app_cardapio/cart.html', context)
 
 
-
 def remover_do_carrinho(request, produto_id):
     carrinho = request.session.get('carrinho', {})
     if str(produto_id) in carrinho:
@@ -103,29 +104,3 @@ def remover_do_carrinho(request, produto_id):
     return redirect('pagina_carrinho')
 
 
-def processar_pagamento(request):
-    carrinho = request.session.get('carrinho', {})
-    valor_total = sum(item.get('preco_total', 0) for item in carrinho.values())
-    forma_pagamento = request.POST.get('forma_pagamento')
-    
-    produtos = []
-    quantidade_vendida_total = 0
-    for produto_id, item in carrinho.items():
-        produto = Produto.objects.get(pk=produto_id)
-        quantidade_vendida = item['quantidade']
-        quantidade_vendida_total += quantidade_vendida
-        produto.quantidade_em_estoque -= quantidade_vendida
-        produto.save()
-        produtos.append(produto)
-    
-    pagamento = Pagamento.objects.create(
-        total=valor_total,
-        forma_pagamento=forma_pagamento,
-        quantidade=quantidade_vendida_total,
-        usuario=request.user
-    )
-    pagamento.produtos.set(produtos)
-    
-    
-    messages.success(request, "Pagamento realizado com sucesso!")
-    return redirect('cardapio')

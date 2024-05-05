@@ -1,36 +1,36 @@
-from django.shortcuts import redirect
-from .models import Pagamento
 from produtos.models import Produto
+from .models import Pagamento
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView
+from pagamentos.models import Pagamento
+from django.contrib import messages
+from produtos.views import limpar_carrinho
 
 def processar_pagamento(request):
     carrinho = request.session.get('carrinho', {})
-    valor_total = sum(item['preco_total'] for item in carrinho.values())
-
-    # Verificar se há estoque suficiente para cada produto no carrinho
+    valor_total = sum(item.get('preco_total', 0) for item in carrinho.values())
+    forma_pagamento = request.POST.get('forma_pagamento')
+    
+    produtos = []
+    quantidade_vendida_total = 0
     for produto_id, item in carrinho.items():
         produto = Produto.objects.get(pk=produto_id)
-        if produto.quantidade_em_estoque < item['quantidade']:
-            # Se não houver estoque suficiente, redirecione de volta para o carrinho com uma mensagem de erro
-            return redirect('pagina_carrinho')  # ou render com uma mensagem de erro
-
-        # Atualizar o estoque do produto
-        produto.quantidade_em_estoque -= item['quantidade']
+        quantidade_vendida = item['quantidade']
+        quantidade_vendida_total += quantidade_vendida
+        produto.quantidade_em_estoque -= quantidade_vendida
         produto.save()
+        produtos.append(produto)
+    
+    pagamento = Pagamento.objects.create(
+        total=valor_total,
+        forma_pagamento=forma_pagamento,
+        quantidade=quantidade_vendida_total,
+        usuario=request.user
+    )
+    pagamento.produtos.set(produtos)
+    
+    
+    messages.success(request, "Pagamento realizado com sucesso!")
+    limpar_carrinho(request)
 
-        # Subtrair a quantidade de ingredientes usados em cada produto do estoque de ingredientes
-        for ingrediente in produto.ingredientes.all():
-            ingrediente.quantidade_em_estoque -= item['quantidade']
-            ingrediente.save()
-
-    # Criar uma instância do model Pagamento para registrar o pagamento
-    forma_pagamento = request.POST.get('forma_pagamento')  # Supondo que isso venha do formulário de pagamento
-    pagamento = Pagamento.objects.create(total=valor_total, forma_pagamento=forma_pagamento)
-
-    # Limpar o carrinho após o pagamento ser concluído
-    request.session.pop('carrinho', None)
-
-    # Redirecionar para a página do carrinho com uma mensagem de sucesso
-    return redirect('pagina_carrinho')  # ou render com uma mensagem de sucesso
-
-
-
+    return redirect('cardapio')

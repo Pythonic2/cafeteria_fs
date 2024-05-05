@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import CardapioView, adicionar_ao_carrinho, pagina_carrinho, remover_do_carrinho, limpar_carrinho, processar_pagamento
+from .views import CardapioView, adicionar_ao_carrinho, pagina_carrinho, remover_do_carrinho, limpar_carrinho
+from pagamentos.views import processar_pagamento
 
 urlpatterns = [
     path('cardapio/', CardapioView.as_view(), name='cardapio'),
