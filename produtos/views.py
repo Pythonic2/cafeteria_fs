@@ -6,22 +6,11 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
-def monitorar_quantidade():
-    produtos_acabando = Produto.objects.filter(quantidade_em_estoque__lt=10)
-    ingredientes_acabando = Ingrediente.objects.filter(quantidade_em_estoque__lt=10)
-    
-    if produtos_acabando.exists():
-        print("Produtos com quantidade abaixo de 10:")
-        for produto in produtos_acabando:
-            print(f"- {produto.nome}: {produto.quantidade_em_estoque}")
-    
-    if ingredientes_acabando.exists():
-        print("\nIngredientes com quantidade abaixo de 10:")
-        for ingrediente in ingredientes_acabando:
-            print(f"- {ingrediente.nome}: {ingrediente.quantidade_em_estoque}")
-
 
 class CardapioView(TemplateView):
+    
+    """ Renderiza o template do cardápio  e retona a quantidade de itens no carrinho : `quantidade_carrinho`"""
+    
     template_name = 'app_cardapio/shop.html'
 
     @method_decorator(login_required)
@@ -39,6 +28,7 @@ class CardapioView(TemplateView):
 
 
 def adicionar_ao_carrinho(request, produto_id):
+    """ utiliza sessao para criar o 'carrinho', e adiciona sempre que o valor do input for +0"""
     produto = Produto.objects.get(pk=produto_id)
     quantidade = int(request.POST.get('quantidade', 0))
     if quantidade >= 1:
@@ -53,9 +43,7 @@ def adicionar_ao_carrinho(request, produto_id):
                 'quantidade': quantidade,
                 'preco_total': quantidade * float(produto.valor)
             }
-
         request.session['carrinho'] = carrinho
-
     return redirect('cardapio')
 
 
@@ -67,6 +55,7 @@ def limpar_carrinho(request):
 
 
 def pagina_carrinho(request):
+    """ Renderiza a pagina do carrinho, e carrega as informaçoes descritas no dict context """
     carrinho = request.session.get('carrinho', {})
     total = sum(item.get('preco_total', 0) for item in carrinho.values())
     quantidade_total = sum(item.get('quantidade', 0) for item in carrinho.values())
@@ -102,5 +91,3 @@ def remover_do_carrinho(request, produto_id):
         request.session['carrinho'] = carrinho
         request.session.save()
     return redirect('pagina_carrinho')
-
-

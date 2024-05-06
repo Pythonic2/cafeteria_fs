@@ -19,7 +19,7 @@ urlpatterns = [
 
     path('adicionar-ingredientes/', AdicionarIngredientes.as_view(), name='adicionar-ingredientes'),
     path('salvar-ingredientes/', AdicionarIngredientes.as_view(), name='salvar-ingredientes'),
-    path('lista-ingredientes/', htmx_lista_ingredientes, name='lista-ingredientes'),
+    #path('lista-ingredientes/', htmx_lista_ingredientes, name='lista-ingredientes'),
     path('editar-ingrediente/<int:pk>/', EditarIngrediente.as_view(), name='editar-ingrediente'),
     path('deletar-ingrediente/<int:id>/', deletar_ingrediente, name='deletar-ingrediente'),
 

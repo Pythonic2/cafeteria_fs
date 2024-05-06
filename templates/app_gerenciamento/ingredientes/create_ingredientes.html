@@ -7,7 +7,7 @@
             <form action="" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="Salvar" >
+                <input type="submit" value="Salvar" hx-post="{% url 'adicionar-ingredientes'%}" hx-target="#conteudo" hx-trigger="click">
             </form>
             
             <input type="reset" value="Adicionar Produtos" onclick="location.href='{% url 'adicionar-produto'%}'">

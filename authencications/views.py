@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.views.generic import CreateView,DeleteView,ListView,UpdateView,DetailView
+from django.views.generic import CreateView
 from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -19,6 +18,9 @@ User = get_user_model()
 
 
 class SignUpView(CreateView):
+    """
+        Cria um usuario ...
+    """
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'register.html'
@@ -34,6 +36,7 @@ class SignUpView(CreateView):
 
 
 class LoginUsuario(LoginView):
+    """ Faz login, usa o Login view que trás uma carga de funcionalidades e mensagens prontas """
     template_name = 'login.html'
 
     def form_invalid(self, form):

@@ -10,7 +10,9 @@ from django.shortcuts import render, get_object_or_404
 from clientes.models import Cliente
 from clientes.forms import ClienteForm
 
+
 def monitorar_quantidade():
+    """ Gera um `Alerta` no console, quando entra na pagina `gerenciamento` mostrando produtos abaixo de 10 unidades ou Ingredientes"""
     produtos_acabando = Produto.objects.filter(quantidade_em_estoque__lt=10)
     ingredientes_acabando = Ingrediente.objects.filter(quantidade_em_estoque__lt=10)
     

@@ -2,15 +2,19 @@
 {% include 'parciais/nav.html' %}
 <h1 style="margin-top:10%;%">Lista Fotos</h1>
 
-{% for foto in fotos %}
-    <img src="{{ foto.imagem.url }}" alt="" style="width: 250px; height: 180px;">
-    <p>Produto: {{ foto.produto.nome }}</p>
-    <a href="{% url 'deletar-fotos' foto.id %}" class="btn btn-danger">Excluir</a>
-    {% if foto.principal %}
-        <a href="{% url 'editar-fotos' foto.id %}" class="btn btn-warning">Desmarcar como Principal</a>
-    {% else %}
-        <a href="{% url 'editar-fotos' foto.id %}" class="btn btn-primary">Marcar como Principal</a>
-    {% endif %}
-{% endfor %}
+<div style="display: flex; flex-wrap: wrap;">
+    {% for foto in fotos %}
+    <div style="margin-right: 10px; margin-bottom: 10px;">
+        <img src="{{ foto.imagem.url }}" alt="" style="width: 250px; height: 180px;">
+        <p>Produto: {{ foto.produto.nome }}</p>
+        <a href="{% url 'deletar-fotos' foto.id %}" class="btn btn-danger">Excluir</a>
+        {% if foto.principal %}
+            <a href="{% url 'editar-fotos' foto.id %}" class="btn btn-warning">Desmarcar como Principal</a>
+        {% else %}
+            <a href="{% url 'editar-fotos' foto.id %}" class="btn btn-primary">Marcar como Principal</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
 <input type="reset" value="Adicionar Fotos" onclick="location.href='{% url 'adicionar-fotos'%}'">
 <input type="reset" value="Lista Produtos" onclick="location.href='{% url 'lista-produtos'%}'">

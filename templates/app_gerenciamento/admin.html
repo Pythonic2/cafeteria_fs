@@ -9,13 +9,15 @@
                 <div class="row">
                     <ul>
                         <li><a href="{% url 'adicionar-ingredientes'%}">Adicionar Ingredientes</li>
-                        <li><a href="{% url 'lista-ingredientes'%}">Lista Ingredientes</li>
+                        {% comment %} <li><a href="{% url 'lista-ingredientes'%}">Lista Ingredientes</li> {% endcomment %}
                         <li><a href="{% url 'adicionar-produto'%}">Adicionar Produtos</li>
                         <li><a href="{% url 'lista-produtos'%}">Lista Produtos</li>
                         <li><a href="{% url 'adicionar-fotos'%}">Adicionar Fotos</a></li>
                         <li><a href="{% url 'lista-fotos'%}">Lista Fotos</a></li>
                         <li><a href="{% url 'criar-cliente'%}">Adicionar Clientes</a></li>
                         <li><a href="{% url 'lista-cliente'%}">Lista CLientes</a></li>
+                        <li><a href="{% url 'relatorio_pagamento'%}">Relatório de Vendas</a></li>
+                        <li><a href="{% url 'relatorio_ingrediente'%}">Balanço de Ingredientes</a></li>
                  
                     </ul>
                 </div>
